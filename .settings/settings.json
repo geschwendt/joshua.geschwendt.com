@@ -1,0 +1,8 @@
+{
+  "search.exclude": {
+    ".idea": true,
+    ".git": true,
+    "jspm_packages": true,
+    "node_modules": true
+  }
+}
