@@ -25,6 +25,8 @@ One of the larger goals here is to achieve a syntax simmilar to AngularJS 2.x wh
 
 ## Current Tech-Stack
 
+[![Join the chat at https://gitter.im/geschwendt/joshua.geschwendt.com](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/geschwendt/joshua.geschwendt.com?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 - Gulp 4 (task runner - babel es6)
 - Broccoli (todo: build system, this will come much later as the plugin ecosystem is very young)
 - JSPM/SystemJs - for es6 module support
