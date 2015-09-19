@@ -1,3 +1,9 @@
-import { bootstrap } from 'core/core';
+'use strict';
 
-bootstrap('module', 'bindings');
+import { Component, View } from './core/metadata';
+
+@Component({ selector: 'application' })
+@View({ templateUrl: 'app/app.html' })
+export class Application {
+	
+}

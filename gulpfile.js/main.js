@@ -2,6 +2,8 @@ import gulp from 'gulp';
 import load from 'gulp-load-plugins';
 
 import path from 'path';
+
+import del from 'del';
 import merge from 'merge2';
 
 import browserSync from 'browser-sync';
@@ -9,15 +11,19 @@ import modrewrite from 'connect-modrewrite';
 
 const $$ = load({ lazy: true });
 
+process.env.GULP_ENV = 'development';
+
 gulp.task('default', () => {
   console.log('default gulp task...');
 });
 
 gulp.task('serve', gulp.series(
+  appClean,  
   gulp.parallel(
     appAssets,
+    appHtml,
     appCSS,
-    appJS
+    gulp.series(appJS, bundleJS)
   ),
   gulp.parallel(
     appWatch,
@@ -25,12 +31,25 @@ gulp.task('serve', gulp.series(
   )
 ));
 
+function appClean(done) {
+  del(['tmp']).then(() => done());
+}
+
 function appAssets(done) {
   done();
 }
 
-function appCSS(done) {
+function appHtml(done) {
   done();  
+}
+
+function appCSS() {
+  return gulp
+    .src('src/client/**/*.scss')
+    .pipe($$.sourcemaps.init())
+    .pipe($$.sass().on('error', $$.sass.logError))
+    .pipe($$.sourcemaps.write('.'))
+    .pipe(gulp.dest('tmp/serve'))
 }
 
 
@@ -58,32 +77,50 @@ function appJS() {
   return merge([
     tsResult.dts
       .pipe($$.sourcemaps.write('.'))
-      .pipe(gulp.dest('.tmp/serve/dts')),
+      .pipe(gulp.dest('tmp/serve/dts')),
     tsResult.js
       .pipe($$.sourcemaps.write('.'))
-      .pipe(gulp.dest('.tmp/serve'))
+      .pipe(gulp.dest('tmp/serve'))
   ]);   
 }
 
 function appWatch() {
-  gulp.watch(['src/client/**/*.ts'], appJS); 
+  gulp.watch(['src/client/**/*.ts'], gulp.series(appJS, bundleJS)); 
   gulp.watch(['src/client/**/*.scss'], appCSS);  
 }
 
 function appServe() {
   const bsync = browserSync.create();
   bsync.init({
-    files: ['.staging/serve/**/*.{css,js}', 'src/client/**/*.html'],
+    files: ['tmp/build/**/*.{css,js}', 'tmp/serve/**/*.{css,js}', 'src/client/**/*.html'],
     server: {
-      baseDir: [ './tmp/serve', 'src/client' ],
+      baseDir: [ 'tmp/serve', 'src/client' ],
       middleware: [ 
+        /// this handles html5mode. 
         modrewrite(['!\\.\\w+$ /index.html [L]']) 
-      ],
-      routes: { '/jspm_packages': 'jspm_packages' }
+      ]
+      //routes: { '/jspm_packages': 'jspm_packages' }
     }
   });    
 }
 
-function bundleJS() {
+gulp.task('bundle', bundleJS);
+function bundleJS(done) {
+  
+  console.log(process.env.GULP_ENV)  
     
+  const Builder = require('systemjs-builder');
+  const builder = new Builder();
+  const system = {
+    import: './tmp/serve/app/index.js',
+    export: './tmp/serve/index.js',
+    config: {}
+  }
+     
+  builder.loadConfigSync('src/client/config.js');
+  builder.buildStatic(
+    system.import, 
+    system.export, 
+    system.config
+  ).then(() => done());
 }

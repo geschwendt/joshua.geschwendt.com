@@ -5,8 +5,8 @@
   "main": "npm run gulp serve:dist",
   "scripts": {
     "gulp": "node node_modules/gulp/bin/gulp",
-    "preinstall": "node tools/npm/check_node_modules --purge",
-    "postinstall": "node tools/npm/copy_npm_shrinkwrap && jspm install && tsd reinstall --overwrite --clean --config src/client/tsd.json && tsd reinstall --overwrite --clean --config src/server/tsd.json",
+    "x-preinstall": "node tools/npm/check_node_modules --purge",
+    "x-postinstall": "node tools/npm/copy_npm_shrinkwrap && jspm install && tsd reinstall --overwrite --clean --config src/client/tsd.json && tsd reinstall --overwrite --clean --config src/server/tsd.json",
     "start": "node node_modules/gulp/bin/gulp serve",
     "test": "npm run gulp test"
   },
@@ -31,22 +31,24 @@
     "babel": "^5.8.23",
     "browser-sync": "^2.9.3",
     "connect-modrewrite": "^0.8.2",
+    "del": "^2.0.2",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-load-plugins": "^0.10.0",
+    "gulp-sass": "^2.0.4",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-typescript": "https://registry.npmjs.org/gulp-typescript/-/gulp-typescript-2.9.0.tgz",
-    "jspm": "^0.16.2",
+    "jspm": "^0.16.4",
     "merge2": "^0.3.6",
+    "systemjs-builder": "^0.14.1",
     "typescript": "^1.6.0-dev.20150818"
   },
   "jspm": {
-    "directories": {},
-    "configFile": "src/client/system.cfg.js",
+    "configFile": "src/client/config.js",
     "dependencies": {
       "angular": "npm:angular@^1.5.0-beta.0"
     },
     "devDependencies": {
-      "typescript": "npm:typescript@^1.6.0-dev.20150818"
+      "typescript": "npm:typescript@^1.6.2"
     }
   }
 }

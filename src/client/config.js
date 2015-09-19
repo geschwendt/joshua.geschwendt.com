@@ -1,5 +1,5 @@
 System.config({
-  baseURL: "joshua.geschwendt.com",
+  baseURL: "./",
   defaultJSExtensions: true,
   transpiler: "typescript",
   paths: {

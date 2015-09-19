@@ -1,4 +1,4 @@
 'use strict';
 
-import * as angular from 'angular';
-export { angular };
+import * as ng from 'angular';
+export { ng };
