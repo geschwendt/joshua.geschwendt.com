@@ -23,7 +23,7 @@ gulp.task('serve', gulp.series(
     appAssets,
     appHtml,
     appCSS,
-    gulp.series(appJS, bundleJS)
+    gulp.series(appJS, bundleJS, appJSPost)
   ),
   gulp.parallel(
     appWatch,
@@ -82,6 +82,13 @@ function appJS() {
       .pipe($$.sourcemaps.write('.'))
       .pipe(gulp.dest('tmp/serve'))
   ]);   
+}
+
+function appJSPost() {
+  return gulp
+    .src('tmp/serve/index.js')
+    .pipe($$.uglify())
+    .pipe(gulp.dest('tmp/serve'));
 }
 
 function appWatch() {
