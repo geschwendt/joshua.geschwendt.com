@@ -17,6 +17,10 @@ gulp.task('default', () => {
   console.log('default gulp task...');
 });
 
+gulp.task('test', function() {
+  console.log('test stub for now.');
+})
+
 gulp.task('serve', gulp.series(
   appClean,  
   gulp.parallel(

@@ -14,26 +14,6 @@
   <a href="https://david-dm.org/geschwendt/joshua.geschwendt.com#info=devDependencies"><img alt="devDependency Status" src="https://david-dm.org/geschwendt/joshua.geschwendt.com/dev-status.svg?style=flat"/></a>	  
 </p>
 
-<!-- ----------------------------------------------------------------------- -->
-
-[joshua.geschwendt.com]: http://joshua.geschwendt.com
-
-[travis-url]: https://travis-ci.org/geschwendt/joshua.geschwendt.com
-[travis-image]: https://img.shields.io/travis/geschwendt/joshua.geschwendt.com/master.svg?style=flat
-
-[buildtime-trend-url]: https://buildtimetrend.herokuapp.com/dashboard/geschwendt/joshua.geschwendt.com/
-[buildtime-trend-image]: https://buildtimetrend.herokuapp.com/badge/geschwendt/joshua.geschwendt.com/latest
-
-[coveralls-url]: https://coveralls.io/r/geshwendt/joshua.geschwendt.com?branch=master
-[coveralls-image]: http://img.shields.io/coveralls/geschwendt/joshua.geschwendt.com.svg?style=flat
-
-[david-dependencies-url]: https://david-dm.org/geschwendt/joshua.geschwendt.com
-[david-dependencies-image]: https://david-dm.org/geschwendt/joshua.geschwendt.com.svg?style=flat
-
-[david-dev-dependencies-url]: https://david-dm.org/geschwendt/joshua.geschwendt.com#info=devDependencies
-[david-dev-dependencies-image]: https://david-dm.org/geschwendt/joshua.geschwendt.com/dev-status.svg?style=flat
-
-<!-- ----------------------------------------------------------------------- -->
 ________________________________________________________________________________
 
 
