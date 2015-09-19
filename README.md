@@ -50,5 +50,18 @@ $(npm/bin) install
 
 - start the server
 ```shell
-npm run gulp serve
+$(npm/bin) run gulp serve
 ```
+
+- test command
+```
+$(npm/bin) run gulp test
+```
+
+## Help Wanted!
+
+I am currently trying to figure out how to test this application. 
+I currently have a karma file set up in `src/client/test` that uses mocha and chai for testing and istanbul for coverage reporting.
+If anyone has any suggestions please feel free to open an issue or make a PR with a solution.
+
+Cheers!

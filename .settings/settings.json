@@ -2,7 +2,12 @@
   "search.exclude": {
     ".idea": true,
     ".git": true,
+    "dist": true,
+    "docs": true,
     "jspm_packages": true,
-    "node_modules": true
+    "node_modules": true,
+    "reports": true,
+    "tmp": true,
+    "tools/npm": true
   }
 }
