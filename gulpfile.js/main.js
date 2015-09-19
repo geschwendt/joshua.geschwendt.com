@@ -2,12 +2,15 @@ import gulp from 'gulp';
 import load from 'gulp-load-plugins';
 
 import path from 'path';
+import { spawn } from 'child_process';
 
 import del from 'del';
 import merge from 'merge2';
 
 import browserSync from 'browser-sync';
 import modrewrite from 'connect-modrewrite';
+
+import karma from 'karma';
 
 const $$ = load({ lazy: true });
 
@@ -16,10 +19,6 @@ process.env.GULP_ENV = 'development';
 gulp.task('default', () => {
   console.log('default gulp task...');
 });
-
-gulp.task('test', function() {
-  console.log('test stub for now.');
-})
 
 gulp.task('serve', gulp.series(
   appClean,  
@@ -45,6 +44,26 @@ function appAssets(done) {
 
 function appHtml(done) {
   done();  
+}
+
+gulp.task('test', gulp.series(cleanTests, runTests, endTest));
+
+function cleanTests(done) {
+  del(['reports']).then(() => done());  
+}
+
+function runTests(done) {
+  try {
+    new karma.Server({ configFile: path.join(process.cwd(), '/src/client/test/karma.cfg.js') }, done).start();
+  } catch(x) {
+      console.log(x);
+  }
+}
+
+function endTest() {
+  return process.env.TRAVIS 
+    ? gulp.src('reports/coverage/**/lcov.info').pipe($$.coveralls())
+    : spawn('open', ['reports/coverage/html/index.html']);
 }
 
 function appCSS() {

@@ -5,6 +5,7 @@ dist/
 docs/
 jspm_packages/
 node_modules/
+reports/
 tmp/
 
 typings/
