@@ -10,3 +10,7 @@ branches:
 cache:
   directories:
     - node_modules
+    
+notifications:
+    webhooks:
+    - https://buildtimetrend.herokuapp.com/travis
