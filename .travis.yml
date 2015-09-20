@@ -21,8 +21,11 @@ notifications:
     on_start: false     # default: false
     
 install:
-  - node --version
-  - npm install -g npm@2.11.3
-  - npm --version
-# - du -sh ./node_modules || true
-  - npm install    
+  - npm install
+
+script: 
+  - npm run gulp test
+  - npm run gulp build
+
+deploy:
+  - npm run gulp deploy
