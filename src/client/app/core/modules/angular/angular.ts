@@ -1,3 +1,7 @@
 'use strict';
 
-export { ng as angular } from './ng';
+export { 
+  angular,
+  ngAnimate,
+  uiRouter 
+} from './ng';

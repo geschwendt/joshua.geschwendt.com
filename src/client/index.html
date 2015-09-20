@@ -1,36 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" jlg-app="joshua.geschwendt.com">
   <head>
-	<!-- build:base -->
 	<base href="/">
-	<!-- endbuild -->	
 	<meta charset="utf-8">
 	<meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title ng-bind="document.title"></title>	
-	<!-- build:css(tmp) styles/main.min.css -->
-      <!-- inject:build.sync.css -->
-	  <link rel="stylesheet" href="library/styles/styles.css">
-      <!-- endinject -->
-      <!-- inject:build.async.css -->
-	  <link rel="stylesheet" href="app/index.css">
-	  <!-- endinject-->
-	<!-- endbuild-->
+
+	<link rel="stylesheet" href="app/index.css">
+    <link rel="stylesheet" href="library/styles/styles.css">
+
 	<style>.ng-cloak { display: none !important; }</style>
   </head>
-  <body class="ng-cloak"> 	
-    <application name="joshua.geschwendt.com"></application>	
-    <!-- build:js(tmp) scripts/index.min.js -->
-      <!-- inject:build:js -->
-      <script src="./index.js"></script>
-      
-      <!--<script src="system.js"></script>
-      <script src="config.js"></script>-->
-      <!--<script type="text/javascript">
-        System.import('./index').catch(console.error.bind(console));
-      </script>-->
-      <!-- endinject -->
-    <!-- endbuild -->
+  <body class=".ng-cloak"> 	
+       
+    <application></application>	
+
+    <script src="./index.js"></script>    
   </body>
 </html>

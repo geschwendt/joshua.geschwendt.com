@@ -55,15 +55,12 @@ export function Component(component) {
     component = component ? component : {};
     component.viewBindings = component.viewBindings || [];
     
-    target.$dependencies = [];
     target.$viewBindings = [];
     component.viewBindings.forEach(function(binding) {
-      target.$dependencies.push(binding.$injectable);
       target.$viewBindings.push(binding.$injectable);  
     });
     
     if (target.$initView) {
-      target.$inject = target.$viewBindings;
       target.$initView(component.selector);
     }
     
@@ -91,8 +88,9 @@ export function View(view) {
     view = view ? view : {};
     target.$initView = function(componentSelector) {     
       target.$injectable = componentSelector; 
-       
       view.directives = view.directives || [];
+      
+      target.$dependencies = []; 
       view.directives.forEach(function(directive) {
         target.$dependencies.push(directive.$injectable);
       });
@@ -103,7 +101,10 @@ export function View(view) {
       componentSelector = pascalCaseToCamelCase(componentSelector);
       componentSelector = dashCaseToCamelCase(componentSelector);
 
-      view.bindToController = view.bindToController || view.bind || {};    
+      view.bindToController = view.bindToController || view.bind || {};
+      
+      target.$inject = target.$viewBindings; 
+      console.log(target.$viewBindings);   
       angular.module(target.$injectable, target.$dependencies)
         .directive(componentSelector, function () {
           return Object.assign(defaults, { controller: target }, view);

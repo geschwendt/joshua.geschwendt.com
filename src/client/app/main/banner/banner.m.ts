@@ -6,8 +6,7 @@ import { IBanner } from './banner.h';
 const selector = 'jlg-banner'; 
 const templateUrl = 'app/main/banner/_banner.html';
 
-@Component({ selector }) 
-@View({ templateUrl })
+@Component({ selector }) @View({ templateUrl })
 export class Banner implements IBanner {
   constructor() {
      

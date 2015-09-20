@@ -9,6 +9,8 @@ System.config({
 
   map: {
     "angular": "npm:angular@1.5.0-beta.0",
+    "angular-animate": "npm:angular-animate@1.5.0-beta.0",
+    "angular-ui-router": "npm:angular-ui-router@0.2.15",
     "typescript": "npm:typescript@1.6.2",
     "github:jspm/nodelibs-buffer@0.1.0": {
       "buffer": "npm:buffer@3.5.0"
@@ -21,6 +23,12 @@ System.config({
     },
     "github:jspm/nodelibs-process@0.1.1": {
       "process": "npm:process@0.10.1"
+    },
+    "npm:angular-animate@1.5.0-beta.0": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
+    },
+    "npm:angular-ui-router@0.2.15": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:angular@1.5.0-beta.0": {
       "process": "github:jspm/nodelibs-process@0.1.1"

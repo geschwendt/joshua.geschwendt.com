@@ -61,10 +61,10 @@ function directiveNormalize(name) {
   return camelCase(name.replace(PREFIX_REGEXP, ''));
 }
 
-const ng2 = angular
+const angular2 = angular
   .module('ng2', [])
   .config(['$compileProvider', ($compileProvider) => { 
     $compileProvider.directive(getAngular2EventDirectives()); 
   }]);
   
-export { ng2 };  
+export { angular2 };  
