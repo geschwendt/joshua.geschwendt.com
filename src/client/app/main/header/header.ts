@@ -19,5 +19,5 @@ export class Header implements IHeader {
   
   // default properties;
   joshua = { geschwendt: { com: '' } };
-  
+    
 }
