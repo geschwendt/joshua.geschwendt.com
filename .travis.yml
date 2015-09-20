@@ -27,5 +27,4 @@ script:
 - npm run gulp test
 - npm run gulp build
 
-deploy:
-- npm run gulp deploy
+deploy: npm run gulp deploy
