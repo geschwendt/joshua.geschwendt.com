@@ -1,6 +1,6 @@
 'use strict';
 
-import { angular, ng2 } from '../../../modules/modules';
+import { angular } from '../../../modules/modules';
 
 interface ObjectCtor extends ObjectConstructor {
     assign(target: any, ...sources: any[]): any;
@@ -104,7 +104,6 @@ export function View(view) {
       view.bindToController = view.bindToController || view.bind || {};
       
       target.$inject = target.$viewBindings; 
-      console.log(target.$viewBindings);   
       angular.module(target.$injectable, target.$dependencies)
         .directive(componentSelector, function () {
           return Object.assign(defaults, { controller: target }, view);

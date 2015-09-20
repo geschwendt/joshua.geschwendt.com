@@ -26,3 +26,10 @@ install:
   - npm --version
 # - du -sh ./node_modules || true
   - npm install    
+  
+script:
+  - npm run gulp test
+  - npm run gulp build
+
+deploy:
+  - npm run gulp deploy

@@ -61,7 +61,7 @@ gulp.task('serve', // broken
   gulp.series(
     clean_tmp,  
     gulp.parallel(
-      build_css_tmp,
+      build_css,
       gulp.series(build_js, bundle_js)
     ),
     gulp.parallel(
@@ -74,16 +74,27 @@ gulp.task('serve:dist',
   gulp.series(
     gulp.series(clean_tmp, clean_dist),  
     gulp.parallel(
-      build_css_tmp,
-      gulp.series(build_js, bundle_js, minify_js)
+      gulp.series(build_css, minify_css),
+      gulp.series(build_js, bundle_js, minify_js),
+      copy_html
     ),
     gulp.parallel(
       watch_dist,
-      serve_tmp   //FIXME
+      serve_dist
     )    
   )
 );
 
+gulp.task('build', 
+  gulp.series(
+    gulp.series(clean_tmp, clean_dist),  
+    gulp.parallel(
+      gulp.series(build_css, minify_css),
+      gulp.series(build_js, bundle_js, minify_js),
+      copy_html
+    )
+  )
+);
 
 // ----------------
 // test
@@ -122,12 +133,12 @@ function end_karma() {
 
 function watch_tmp() {
   gulp.watch(['src/client/**/*.ts'], gulp.series(build_js, bundle_js)); 
-  gulp.watch(['src/client/**/*.scss'], build_css_tmp);  
+  gulp.watch(['src/client/**/*.scss'], build_css);  
 }
 
 function watch_dist() {
   gulp.watch(['src/client/**/*.ts'], gulp.series(build_js, bundle_js, minify_js)); 
-  gulp.watch(['src/client/**/*.scss'], build_css_tmp);  
+  gulp.watch(['src/client/**/*.scss'], gulp.series(build_css, minify_css));  
 }
 
 
@@ -162,7 +173,7 @@ function serve_dist() {
 // ----------------
 // css
 
-function build_css_tmp() {
+function build_css() {
   return gulp
     .src('src/client/**/*.scss')
     .pipe($$.sourcemaps.init())
@@ -171,8 +182,29 @@ function build_css_tmp() {
     .pipe(gulp.dest('tmp/serve'))
 }
 
-function build_css_dist() {
-    
+function minify_css() {
+  return gulp
+    .src('tmp/serve/**/*.css')
+    .pipe($$.csso())
+    .pipe(gulp.dest('dist'));
+}
+
+
+// ----------------
+// js
+
+function copy_html() {
+  return gulp
+    .src('src/client/**/*.html')
+    .pipe(gulp.dest('dist'));
+}
+
+function cache_templates() {
+  return gulp
+    .src('src/client/**/*.html')
+    .pipe($$.angularTemplatecache({
+    // TODO: difficult as it will need to be injected early into the build    
+    })).pipe(gulp.dest('tmp/serve'))
 }
 
 
@@ -225,5 +257,15 @@ function minify_js() {
   return gulp
     .src('tmp/serve/index.js')
     .pipe($$.uglify())
-    .pipe(gulp.dest('tmp/serve'));
+    .pipe(gulp.dest('dist'));
+}
+
+gulp.task('deploy', deploy);
+
+function deploy() {
+  if (process.env.TRAVIS) {
+    return gulp
+      .src('dist/**/*')
+      .pipe($$.ghPages());
+  }
 }
