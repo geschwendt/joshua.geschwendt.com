@@ -1,15 +1,12 @@
 'use strict';
                   
 import { Component, View } from '../../core/core';
+import { IHeader } from './header.head';
 
+const selector = 'jlg-header'; 
 const templateUrl = 'app/main/header/_header.html';
 
-interface IHeader {
-    joshua: { geschwendt: { com: string } };
-}
-
-@Component({ selector: 'jlg-header' })
-@View({ templateUrl })
+@Component({ selector }) @View({ templateUrl })
 export class Header implements IHeader {    
    
   constructor() {    
