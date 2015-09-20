@@ -212,12 +212,13 @@ function bundle_js(done) {
     config: {}
   }
      
-  builder.loadConfigSync('src/client/config.js');
-  builder.buildStatic(
-    system.import, 
-    system.export, 
-    system.config
-  ).then(() => done());
+  builder.loadConfig('src/client/config.js').then(() => {
+    builder.buildStatic(
+      system.import, 
+      system.export, 
+      system.config
+    ).then(() => done());
+  });
 }
 
 function minify_js() {
