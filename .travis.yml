@@ -24,8 +24,8 @@ install:
   - npm install
 
 script: 
-  - npm run gulp test
-  - npm run gulp build
+  - test
+  - build
 
 deploy:
   - npm run gulp deploy
