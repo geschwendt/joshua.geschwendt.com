@@ -51,18 +51,19 @@ export function Component(component) {
     if (!component && !component.selector) {
       throw new Error('@Component() must contains selector property!');
     }
-    
+   
     component = component ? component : {};
-    let bindings = component.viewBindings || [];
+    component.viewBindings = component.viewBindings || [];
     
     target.$dependencies = [];
     target.$viewBindings = [];
-    bindings.forEach(function(binding) {
-      target.$dependencies.push(binding.name);
-      target.$viewBindings.push(binding.name);  
+    component.viewBindings.forEach(function(binding) {
+      target.$dependencies.push(binding.$injectable);
+      target.$viewBindings.push(binding.$injectable);  
     });
     
     if (target.$initView) {
+      target.$inject = target.$viewBindings;
       target.$initView(component.selector);
     }
     
@@ -88,19 +89,23 @@ export function View(view) {
     }
     
     view = view ? view : {};
-    target.$initView = function(componentSelector) {
-      let directives = view.directives || [];
-      
-      directives.forEach(function(directive) {
-        target.$dependencies.push(directive.name);
+    target.$initView = function(componentSelector) {     
+      target.$injectable = componentSelector; 
+       
+      view.directives = view.directives || [];
+      view.directives.forEach(function(directive) {
+        target.$dependencies.push(directive.$injectable);
       });
+      
+      target.$injectable = pascalCaseToCamelCase(target.$injectable);
+      target.$injectable = dashCaseToDotCase(target.$injectable);
       
       componentSelector = pascalCaseToCamelCase(componentSelector);
       componentSelector = dashCaseToCamelCase(componentSelector);
 
       view.bindToController = view.bindToController || view.bind || {};
            
-      angular.module(target.name, target.$dependencies)
+      angular.module(target.$injectable, target.$dependencies)
         .directive(componentSelector, function () {
           return Object.assign(defaults, { controller: target }, view);
         });
@@ -125,5 +130,14 @@ function pascalCaseToCamelCase(str) {
 function dashCaseToCamelCase(string) {
     return string.replace( /-([a-z])/ig, function(all, letter) {
         return letter.toUpperCase();
+    });
+}
+
+/**
+ * Convert dash case to camel case
+ */
+function dashCaseToDotCase(string) {
+    return string.replace( /-([a-z])/ig, function(all, letter) {
+        return `.${letter}`;
     });
 }
