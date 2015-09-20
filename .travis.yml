@@ -14,18 +14,18 @@ cache:
 notifications:
   webhooks:
     urls:
-      - https://webhooks.gitter.im/e/64efa1a433524c5e3e25
-      - https://buildtimetrend.herokuapp.com/travis
+    - https://webhooks.gitter.im/e/64efa1a433524c5e3e25
+    - https://buildtimetrend.herokuapp.com/travis
     on_success: always  # options: [always|never|change] default: always
     on_failure: always  # options: [always|never|change] default: always
     on_start: false     # default: false
     
 install:
-  - npm install
+- npm install
 
 script: 
-  - test
-  - build
+- npm run gulp test
+- npm run gulp build
 
 deploy:
-  - npm run gulp deploy
+- npm run gulp deploy
