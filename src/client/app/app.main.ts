@@ -9,7 +9,7 @@ import { IApplication } from './app.head';
 const selector = 'application';
 
 const directives = [ Header ];
-const templateUrl = 'app/app.html';
+const templateUrl = 'app/_app.html';
 
 @Component({ selector }) @View({ templateUrl, directives })
 export class Application implements IApplication{}
