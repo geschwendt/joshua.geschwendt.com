@@ -14,8 +14,8 @@
   <a href="https://david-dm.org/geschwendt/joshua.geschwendt.com#info=devDependencies"><img alt="devDependency Status" src="https://david-dm.org/geschwendt/joshua.geschwendt.com/dev-status.svg?style=flat"/></a>	  
 </p>
 
+<p align="right"><a href="https://gitter.im/geschwendt/joshua.geschwendt.com?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/geschwendt/joshua.geschwendt.com" src="https://badges.gitter.im/Join%20Chat.svg"/></a></p>
 ________________________________________________________________________________
-
 
 This project is under very active development. 
 Large changes will be implemented, as i get familiar with es6/es7 and typescript and their best practices. 
@@ -24,8 +24,6 @@ The dependencies are going to be updated as soon as a new release is avalable, a
 One of the larger goals here is to achieve a syntax simmilar to AngularJS 2.x while still using the Angular 1.x library, heavy decorator use (es7), which also has an API that tends to be changed every so often.
 
 ## Current Tech-Stack
-
-[![Join the chat at https://gitter.im/geschwendt/joshua.geschwendt.com](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/geschwendt/joshua.geschwendt.com?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 - Gulp 4 (task runner - babel es6)
 - Broccoli (todo: build system, this will come much later as the plugin ecosystem is very young)
