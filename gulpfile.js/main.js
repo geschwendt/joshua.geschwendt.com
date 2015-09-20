@@ -14,59 +14,155 @@ import karma from 'karma';
 
 const $$ = load({ lazy: true });
 
-process.env.GULP_ENV = 'development';
+/// set the gulp enviornment 
+process.env.GULP_ENV = !process.env.TRAVIS 
+  ? 'development' 
+  : 'production';
+
+// ----------------
+// default
 
 gulp.task('default', () => {
-  console.log('default gulp task...');
+  console.log(gulp.tree());
 });
 
-gulp.task('serve', gulp.series(
-  appClean,  
-  gulp.parallel(
-    appAssets,
-    appHtml,
-    appCSS,
-    gulp.series(appJS, bundleJS, appJSPost)
-  ),
-  gulp.parallel(
-    appWatch,
-    appServe  
-  )
-));
 
-function appClean(done) {
+// ----------------
+// clean
+
+gulp.task('clean.all', gulp.series(clean_dist, clean_docs, clean_reports, clean_tmp));
+
+gulp.task('clean.dist',    clean_dist);
+gulp.task('clean.docs',    clean_docs);
+gulp.task('clean.reports', clean_reports);
+gulp.task('clean.tmp',     clean_tmp);
+
+function clean_dist(done) {
+  del(['dist']).then(() => done());  
+}
+
+function clean_docs(done) {
+  del(['docs']).then(() => done());  
+}
+
+function clean_reports(done) {
+  del(['reports']).then(() => done());    
+}
+
+function clean_tmp(done) {
   del(['tmp']).then(() => done());
 }
 
-function appAssets(done) {
-  done();
+
+// ----------------
+// serve
+
+gulp.task('serve', // broken
+  gulp.series(
+    clean_tmp,  
+    gulp.parallel(
+      build_css_tmp,
+      gulp.series(build_js, bundle_js)
+    ),
+    gulp.parallel(
+      watch_tmp,
+      serve_tmp  
+    )
+));
+
+gulp.task('serve:dist', 
+  gulp.series(
+    gulp.series(clean_tmp, clean_dist),  
+    gulp.parallel(
+      build_css_tmp,
+      gulp.series(build_js, bundle_js, minify_js)
+    ),
+    gulp.parallel(
+      watch_dist,
+      serve_tmp   //FIXME
+    )    
+  )
+);
+
+
+// ----------------
+// test
+
+gulp.task('test', 
+  gulp.series(  
+    gulp.series(clean_tmp, clean_reports),
+    gulp.series(build_js), 
+    run_karma, 
+    end_karma
+  )
+);
+
+gulp.task('test:dist', 
+  gulp.series(  
+    gulp.series(clean_tmp, clean_reports),
+    gulp.series(build_js), 
+    run_karma, 
+    end_karma
+  )
+);
+
+function run_karma(done) {
+  new karma.Server({ configFile: path.join(process.cwd(), '/src/client/test/karma.cfg.js') }, done).start();
 }
 
-function appHtml(done) {
-  done();  
-}
-
-gulp.task('test', gulp.series(cleanTests, runTests, endTest));
-
-function cleanTests(done) {
-  del(['reports']).then(() => done());  
-}
-
-function runTests(done) {
-  try {
-    new karma.Server({ configFile: path.join(process.cwd(), '/src/client/test/karma.cfg.js') }, done).start();
-  } catch(x) {
-      console.log(x);
-  }
-}
-
-function endTest() {
+function end_karma() {
   return process.env.TRAVIS 
     ? gulp.src('reports/coverage/**/lcov.info').pipe($$.coveralls())
     : spawn('open', ['reports/coverage/html/index.html']);
 }
 
-function appCSS() {
+
+// ----------------
+// watch
+
+function watch_tmp() {
+  gulp.watch(['src/client/**/*.ts'], gulp.series(build_js, bundle_js)); 
+  gulp.watch(['src/client/**/*.scss'], build_css_tmp);  
+}
+
+function watch_dist() {
+  gulp.watch(['src/client/**/*.ts'], gulp.series(build_js, bundle_js, minify_js)); 
+  gulp.watch(['src/client/**/*.scss'], build_css_tmp);  
+}
+
+
+// ----------------
+// servers
+
+function serve_tmp() {
+  const bsync = browserSync.create();
+  bsync.init({
+    files: ['tmp/build/**/*.{css,js}', 'tmp/serve/**/*.{css,js}', 'src/client/**/*.html'],
+    server: {
+      baseDir: [ 'tmp/serve', 'src/client' ],
+      middleware: [ 
+        modrewrite(['!\\.\\w+$ /index.html [L]']) 
+      ]
+    }
+  });    
+}
+
+function serve_dist() {
+  const bsync = browserSync.create();
+  bsync.init({
+    files: ['dist/**'],
+    server: {
+      baseDir:    ['dist'],
+      middleware: [modrewrite(['!\\.\\w+$ /index.html [L]'])]
+    }
+  });    
+}
+
+
+// ----------------
+// css
+
+function build_css_tmp() {
   return gulp
     .src('src/client/**/*.scss')
     .pipe($$.sourcemaps.init())
@@ -75,14 +171,13 @@ function appCSS() {
     .pipe(gulp.dest('tmp/serve'))
 }
 
+function build_css_dist() {
+    
+}
 
-/**
- * 
- * 
- * 
- * 
- * 
- */
+
+// ----------------
+// js
 
 const TSCONFIG = require('../src/client/tsconfig.json').compilerOptions;
 const TSOPTIONS = { 
@@ -91,7 +186,7 @@ const TSOPTIONS = {
 
 const tsProject = $$.typescript.createProject(TSCONFIG, TSOPTIONS);  
 
-function appJS() {
+function build_js() {
   const tsResult = gulp
     .src(path.join('src/client', '**/*.ts'))
     .pipe($$.sourcemaps.init())
@@ -107,38 +202,8 @@ function appJS() {
   ]);   
 }
 
-function appJSPost() {
-  return gulp
-    .src('tmp/serve/index.js')
-    .pipe($$.uglify())
-    .pipe(gulp.dest('tmp/serve'));
-}
-
-function appWatch() {
-  gulp.watch(['src/client/**/*.ts'], gulp.series(appJS, bundleJS)); 
-  gulp.watch(['src/client/**/*.scss'], appCSS);  
-}
-
-function appServe() {
-  const bsync = browserSync.create();
-  bsync.init({
-    files: ['tmp/build/**/*.{css,js}', 'tmp/serve/**/*.{css,js}', 'src/client/**/*.html'],
-    server: {
-      baseDir: [ 'tmp/serve', 'src/client' ],
-      middleware: [ 
-        /// this handles html5mode. 
-        modrewrite(['!\\.\\w+$ /index.html [L]']) 
-      ]
-      //routes: { '/jspm_packages': 'jspm_packages' }
-    }
-  });    
-}
-
-gulp.task('bundle', bundleJS);
-function bundleJS(done) {
-  
-  console.log(process.env.GULP_ENV)  
-    
+function bundle_js(done) {
+   
   const Builder = require('systemjs-builder');
   const builder = new Builder();
   const system = {
@@ -153,4 +218,11 @@ function bundleJS(done) {
     system.export, 
     system.config
   ).then(() => done());
+}
+
+function minify_js() {
+  return gulp
+    .src('tmp/serve/index.js')
+    .pipe($$.uglify())
+    .pipe(gulp.dest('tmp/serve'));
 }
