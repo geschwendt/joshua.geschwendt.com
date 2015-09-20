@@ -44,56 +44,72 @@ if (!Object.assign) {
   });
 }
 
-export function Component(component) { console.log('[ COMPONENT ]:', component);  
-  component = component ? component : {};
-  return function decorator(target) { console.log('[ COMPONENT { target } ]:', target); 
-	
+////
+
+export function Component(component) {
+  return function decorator(target) {   
+    if (!component && !component.selector) {
+      throw new Error('@Component() must contains selector property!');
+    }
+    
+    component = component ? component : {};
+    let bindings = component.viewBindings || [];
+    
+    target.$dependencies = [];
+    target.$viewBindings = [];
+    bindings.forEach(function(binding) {
+      target.$dependencies.push(binding.name);
+      target.$viewBindings.push(binding.name);  
+    });
+    
     if (target.$initView) {
       target.$initView(component.selector);
     }
     
-    if (!component.selector) {
-      throw new Error('@Component() must contains selector property.');  
-    }
-    
-	target.$isComponent = true;
-  }
+    target.$isComponent = true;
+  };
 }
 
-export function View(view) { console.log('[ VIEW ]:', view); 
-  view ? view : {};
-  const defaults = {
-    bindToController: true,  
-    controllerAs: '_', // should this be allowed to be overwritten?
-    restrict: 'E',
-    scope: {},
-  };
-  
+export function View(view) {
   if (!view.template && !view.templateUrl) {
     throw new Error('@View() must contain template of templateUrl property.')  
   }
   
-  return function decorator(target) { console.log('[ VIEW { target } ]:', target); 
-    
+  const defaults = {
+    bindToController: true,
+    controllerAs: '_', // should this be allowed to be overwritten?
+    restrict: 'E',
+    scope: {}
+  };
+  
+  return function decorator(target) {  
     if (target.$isComponent) {
-      throw new Error('@View() must be placed after @Component().');
-    } 
+      throw new Error('@View() must be placed after @Component()!');
+    }
     
-    target.$initView = function(componentSelector) { 
-    
+    view = view ? view : {};
+    target.$initView = function(componentSelector) {
+      let directives = view.directives || [];
+      
+      directives.forEach(function(directive) {
+        target.$dependencies.push(directive.name);
+      });
+      
       componentSelector = pascalCaseToCamelCase(componentSelector);
       componentSelector = dashCaseToCamelCase(componentSelector);
-    
-      view.bindToController = view.bindToController || view.bind || {};   
-	  
-      angular.module(target.name, []).directive(componentSelector, function() {
-        return Object.assign(defaults, { controller: target }, view);
-      });
+
+      view.bindToController = view.bindToController || view.bind || {};
+           
+      angular.module(target.name, target.$dependencies)
+        .directive(componentSelector, function () {
+          return Object.assign(defaults, { controller: target }, view);
+        });
     };
-      
-    target.$isView = true; 	
-  }
+
+    target.$isView = true;
+  };
 }
+
 
 /**
  * Lowercase the first char of a string

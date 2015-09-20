@@ -5,6 +5,7 @@
 import { angular } from '../modules';
 
 export function Bootstrap(appComponent:any, appBindings?:Array<any>) {
+  console.log(appComponent.name);  
   angular.module('__auto__', [ appComponent.name ]);  
   angular.element(document).ready(function() {
     angular.bootstrap(document, ['__auto__'], {
