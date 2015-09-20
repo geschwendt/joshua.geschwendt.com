@@ -1,5 +1,3 @@
-/// <reference path="../../../../library/typings/tsd.d.ts" />
-
 'use strict';
 
 import { angular, ng2 } from '../modules';

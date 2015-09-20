@@ -1,7 +1,7 @@
 'use strict';
                   
 import { Component, View } from '../../core/core';
-import { IHeader } from './header.head';
+import { IHeader } from './header.h';
 
 const selector = 'jlg-header'; 
 const templateUrl = 'app/main/header/_header.html';
