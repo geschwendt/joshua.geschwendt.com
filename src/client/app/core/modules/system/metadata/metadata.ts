@@ -1,6 +1,6 @@
 'use strict';
 
-import { angular } from './modules/angular/angular';
+import { angular } from '../../../modules/modules';
 
 interface ObjectCtor extends ObjectConstructor {
     assign(target: any, ...sources: any[]): any;
