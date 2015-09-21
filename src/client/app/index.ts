@@ -2,6 +2,6 @@
 
 import { Bootstrap } from './core/core';
 
-import { Application } from './app.m';
+import { Application } from './app';
 
 Bootstrap(Application, []);

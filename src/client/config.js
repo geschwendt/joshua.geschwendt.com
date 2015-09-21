@@ -11,6 +11,7 @@ System.config({
     "angular": "npm:angular@1.5.0-beta.0",
     "angular-animate": "npm:angular-animate@1.5.0-beta.0",
     "angular-ui-router": "npm:angular-ui-router@0.2.15",
+    "text": "github:systemjs/plugin-text@0.0.2",
     "typescript": "npm:typescript@1.6.2",
     "github:jspm/nodelibs-buffer@0.1.0": {
       "buffer": "npm:buffer@3.5.0"

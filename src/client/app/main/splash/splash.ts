@@ -1,17 +1,15 @@
 'use strict';
                   
-import { Component, View } from '../../core/core';
-import { ISplash } from './splash.h';
+import { Component, View, TEMPLATE_CACHE } from '../../core/core';
+
+interface ISplash {}
 
 const selector = 'jlg-splash'; 
 const viewBindings = [{$injectable:'$timeout'}];
 
-const templateUrl = 'app/main/splash/_splash.html';
+const template = TEMPLATE_CACHE.JLG_SPLASH;
 
-@Component({ 
-  selector, viewBindings 
-}) 
-@View({ templateUrl })
+@Component({ selector, viewBindings }) @View({ template })
 export class Splash implements ISplash {
   showSplash:boolean = true;
   $timeout:ng.ITimeoutService;  

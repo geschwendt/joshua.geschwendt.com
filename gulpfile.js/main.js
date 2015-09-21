@@ -148,9 +148,13 @@ function watch_dist() {
 function serve_tmp() {
   const bsync = browserSync.create();
   bsync.init({
-    files: ['tmp/build/**/*.{css,js}', 'tmp/serve/**/*.{css,js}', 'src/client/**/*.html'],
+    files: [
+      'tmp/build/**/*.js', 
+      'tmp/serve/**/*.css', 
+      'src/client/**/*.html'
+    ],
     server: {
-      baseDir: [ 'tmp/serve', 'src/client' ],
+      baseDir: [ 'tmp/build', 'tmp/serve', 'src/client' ],
       middleware: [ 
         modrewrite(['!\\.\\w+$ /index.html [L]']) 
       ]
@@ -191,22 +195,13 @@ function minify_css() {
 
 
 // ----------------
-// js
+// html
 
 function copy_html() {
   return gulp
-    .src('src/client/**/*.html')
+    .src('src/client/index.html')
     .pipe(gulp.dest('dist'));
 }
-
-function cache_templates() {
-  return gulp
-    .src('src/client/**/*.html')
-    .pipe($$.angularTemplatecache({
-    // TODO: difficult as it will need to be injected early into the build    
-    })).pipe(gulp.dest('tmp/serve'))
-}
-
 
 // ----------------
 // js
@@ -240,7 +235,7 @@ function bundle_js(done) {
   const builder = new Builder();
   const system = {
     import: './tmp/serve/app/index.js',
-    export: './tmp/serve/index.js',
+    export: './tmp/build/app/index.js',
     config: {}
   }
      
@@ -255,7 +250,7 @@ function bundle_js(done) {
 
 function minify_js() {
   return gulp
-    .src('tmp/serve/index.js')
+    .src('tmp/build/**/*.js')
     .pipe($$.uglify())
     .pipe(gulp.dest('dist'));
 }
@@ -263,9 +258,9 @@ function minify_js() {
 gulp.task('deploy', deploy);
 
 function deploy() {
-  if (process.env.TRAVIS) {
+//if (process.env.TRAVIS) {
     return gulp
       .src('dist/**/*')
       .pipe($$.ghPages());
-  }
+//}
 }

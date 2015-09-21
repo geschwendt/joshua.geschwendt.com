@@ -10,7 +10,11 @@ branches:
 cache:
   directories:
     - node_modules
-    
+env:
+  global:
+    - GH_REF: github.com/geschwendt/joshua.geschwendt.com.git
+    - secure: 
+      
 notifications:
   webhooks:
     urls:
