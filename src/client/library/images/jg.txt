@@ -1,2 +1,0 @@
-// 728 x 264
-// TODO: make this the default size for README.md image.
