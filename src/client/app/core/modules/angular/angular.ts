@@ -5,3 +5,5 @@ export {
   ngAnimate,
   uiRouter 
 } from './ng';
+
+export * from './view_bindings';
