@@ -5,10 +5,11 @@
   "main": "npm run gulp serve:dist",
   "scripts": {
     "gulp": "node node_modules/gulp/bin/gulp",
+    "make": "node node_modules/gulp/bin/gulp build",
     "preinstall": "node tools/npm/check_node_modules --purge",
     "postinstall": "node tools/npm/copy_npm_shrinkwrap && jspm install && tsd reinstall --overwrite --clean --config src/client/tsd.json && tsd reinstall --overwrite --clean --config src/server/tsd.json",
     "start": "node node_modules/gulp/bin/gulp serve",
-    "test": "npm run gulp test && npm run gulp build && npm run gulp deploy"
+    "test": "npde node_modules/gulp/bin/gulp test"
   },
   "repository": {
     "type": "git",

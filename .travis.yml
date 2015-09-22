@@ -4,29 +4,40 @@ node_js:
 - '0.12'
 
 branches:
-  except:
-    - contributions
+  only:
+  - master
+  - stable
 
 cache:
   directories:
-    - node_modules
+  - node_modules
+  
 env:
   global:
-    - GH_REF: github.com/geschwendt/joshua.geschwendt.com.git
-    - secure: 
-      
+  - LOGS_DIRECTORY=/tmp/solution-build/logs
+# - GH_REF: github.com/geschwendt/joshua.geschwendt.com.git
+# - secure: 
+     
+#before_install:
+
+install:
+- npm install
+  
+#before_script:
+
+script: 
+- npm run-script make
+- npm run-script test
+
+#after_script:
+
 notifications:
   webhooks:
     urls:
-      - https://webhooks.gitter.im/e/64efa1a433524c5e3e25
-      - https://buildtimetrend.herokuapp.com/travis
+    - https://buildtimetrend.herokuapp.com/travis
+    - https://webhooks.gitter.im/e/64efa1a433524c5e3e25   
     on_success: always  # options: [always|never|change] default: always
     on_failure: always  # options: [always|never|change] default: always
-    on_start: false     # default: false
-    
-install:
-  - node --version
-  - npm install -g npm@2.11.3
-  - npm --version
-# - du -sh ./node_modules || true
-  - npm install    
+    on_start:   false   # default: false
+
+#deploy:
