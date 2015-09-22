@@ -1,50 +1,14 @@
+/// <reference path="./polyfills.ts" />
+
 'use strict';
 
 import { angular } from '../../../modules/modules';
-
-interface ObjectCtor extends ObjectConstructor {
-    assign(target: any, ...sources: any[]): any;
-}
-
-declare var Object: ObjectCtor;
-export let assign = Object.assign ? Object.assign : function(target: any, ...sources: any[]): any {
-  return;
-};
-
-if (!Object.assign) {
-  Object.defineProperty(Object, 'assign', {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    value: function(target) {
-      'use strict';
-      if (target === undefined || target === null) {
-        throw new TypeError('Cannot convert first argument to object');
-      }
-
-      var to = Object(target);
-      for (var i = 1; i < arguments.length; i++) {
-        var nextSource = arguments[i];
-        if (nextSource === undefined || nextSource === null) {
-          continue;
-        }
-        nextSource = Object(nextSource);
-
-        var keysArray = Object.keys(Object(nextSource));
-        for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
-          var nextKey = keysArray[nextIndex];
-          var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
-          if (desc !== undefined && desc.enumerable) {
-            to[nextKey] = nextSource[nextKey];
-          }
-        }
-      }
-      return to;
-    }
-  });
-}
-
-////
+import { Object } from './polyfills';
+import {
+  dashCaseToCamelCase,
+  dashCaseToDotCase,  
+  pascalCaseToCamelCase,  
+} from './utilites';
 
 export function Component(component) {
   return function decorator(target) {   
@@ -112,31 +76,4 @@ export function View(view) {
 
     target.$isView = true;
   };
-}
-
-
-/**
- * Lowercase the first char of a string
- */
-function pascalCaseToCamelCase(str) {
-    return str.charAt(0).toLowerCase() + str.substring(1);
-}
-
-
-/**
- * Convert dash case to camel case
- */
-function dashCaseToCamelCase(string) {
-    return string.replace( /-([a-z])/ig, function(all, letter) {
-        return letter.toUpperCase();
-    });
-}
-
-/**
- * Convert dash case to camel case
- */
-function dashCaseToDotCase(string) {
-    return string.replace( /-([a-z])/ig, function(all, letter) {
-        return `.${letter}`;
-    });
 }

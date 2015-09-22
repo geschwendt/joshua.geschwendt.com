@@ -1,4 +1,4 @@
-/// <reference path="./cache.d.ts" />
+/// <reference path="./templates.d.ts" />
 
 'use strict';
 
