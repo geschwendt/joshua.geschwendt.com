@@ -1,13 +1,13 @@
 'use strict';
                   
-import { Component, View, TEMPLATES, Timeout } from '../../core/core';
+import { Component, View, Timeout, TEMPLATES } from '../../core/core';
 
 interface ISplash {}
 
-const selector = 'jlg-splash'; 
-const viewBindings = [ Timeout ];
+const selector:string = 'jlg-splash'; 
+const viewBindings:Array<any> = [ Timeout ];
 
-const template = TEMPLATES.JLG_SPLASH;
+const template:TEMPLATES = TEMPLATES.JLG_SPLASH;
 
 @Component({ selector, viewBindings }) @View({ template })
 export class Splash implements ISplash {

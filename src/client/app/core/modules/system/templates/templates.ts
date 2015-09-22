@@ -14,7 +14,7 @@ import JLG_WINDOW from 'src/client/app/main/window/_window.html!text';
 
 import JLG_FOOTER from 'src/client/app/main/footer/_footer.html!text'; 
 
-export const TEMPLATES = {
+export enum TEMPLATES {
   APPLICATION,	
   JLG_SPLASH,
   JLG_HEADER,
