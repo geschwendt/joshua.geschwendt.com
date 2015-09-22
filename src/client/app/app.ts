@@ -1,6 +1,6 @@
 'use strict';
 
-import { Component, View, TEMPLATE_CACHE } from './core/core';
+import { Component, View, TEMPLATES } from './core/core';
 
 import { Splash } from './main/splash/splash';
 import { Header } from './main/header/header';
@@ -12,7 +12,7 @@ interface IApplication {}
 
 const selector = 'application';
 
-const template = TEMPLATE_CACHE.APPLICATION;
+const template = TEMPLATES.APPLICATION;
 const directives = [ Splash, Header, Banner, Window, Footer ];
 
 @Component({ selector }) 
