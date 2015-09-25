@@ -46,7 +46,7 @@
     "gulp-typescript": "^2.9.0",
     "gulp-uglify": "^1.4.1",
     "jspm": "^0.16.6",
-    "karma": "^0.13.9",
+    "karma": "^0.13.10",
     "karma-chai": "^0.1.0",
     "karma-coverage": "^0.5.2",
     "karma-mocha": "^0.2.0",
