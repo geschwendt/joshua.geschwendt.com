@@ -1,3 +1,7 @@
+/* global process */
+
+'use strict';
+
 import gulp from 'gulp';
 import load from 'gulp-load-plugins';
 
@@ -68,7 +72,8 @@ gulp.task('serve', // broken
       watch_tmp,
       serve_tmp  
     )
-));
+  )
+);
 
 gulp.task('serve:dist', 
   gulp.series(
@@ -118,13 +123,15 @@ gulp.task('test:dist',
 );
 
 function run_karma(done) {
-  new karma.Server({ configFile: path.join(process.cwd(), '/src/client/test/karma.cfg.js') }, done).start();
+  const configFile = path.join(process.cwd(), '/src/client/test/karma.cfg.js');
+  new karma.Server({ configFile }, done).start();
 }
 
-function end_karma() {
-  return process.env.TRAVIS 
-    ? gulp.src('reports/coverage/**/lcov.info').pipe($$.coveralls())
-    : spawn('open', ['reports/coverage/html/index.html']);
+function end_karma(done) {
+  done();  
+  // return process.env.TRAVIS 
+    // ? gulp.src('reports/coverage/**/lcov.info').pipe($$.coveralls())
+    // : spawn('open', ['reports/coverage/html/index.html']);
 }
 
 
@@ -258,9 +265,9 @@ function minify_js() {
 gulp.task('deploy', deploy);
 
 function deploy() {
-//if (process.env.TRAVIS) {
+  if (!process.env.TRAVIS) {
     return gulp
       .src('dist/**/*')
       .pipe($$.ghPages());
-//}
+  }
 }

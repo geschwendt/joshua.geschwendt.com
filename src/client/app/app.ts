@@ -10,14 +10,14 @@ import { Footer } from './main/footer/footer';
 
 interface IApplication {}
 
-const selector = 'application';
+const selector:string = 'application';
 
-const template = TEMPLATES.APPLICATION;
-const directives = [ Splash, Header, Banner, Window, Footer ];
+const directives:Array<any> = [ Splash, Header, Banner, Window, Footer ];
+const template:string = TEMPLATES.APPLICATION;
 
 @Component({ selector }) 
 @View({ template, directives })
-export class Application implements IApplication{
+export class Application implements IApplication {
   constructor() {
 	  
   }

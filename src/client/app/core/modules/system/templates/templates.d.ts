@@ -30,3 +30,13 @@ declare module 'src/client/app/main/footer/_footer.html!text' {
   const html : string;
   export default html;  
 }
+
+declare module 'src/client/app/main/window/projects/_projects.html!text' {
+  const html : string;
+  export default html;    
+}
+
+declare module 'src/client/app/main/window/projects/project/_project.html!text' {
+  const html : string;
+  export default html;    
+}

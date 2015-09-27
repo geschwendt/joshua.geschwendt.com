@@ -7,7 +7,7 @@ interface IHeader {
 }
 
 const selector:string = 'jlg-header'; 
-const template:TEMPLATES = TEMPLATES.JLG_HEADER;
+const template:string = TEMPLATES.JLG_HEADER;
 
 @Component({ selector }) @View({ template })
 export class Header implements IHeader {    

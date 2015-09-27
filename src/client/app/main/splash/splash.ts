@@ -7,7 +7,7 @@ interface ISplash {}
 const selector:string = 'jlg-splash'; 
 const viewBindings:Array<any> = [ Timeout ];
 
-const template:TEMPLATES = TEMPLATES.JLG_SPLASH;
+const template:string = TEMPLATES.JLG_SPLASH;
 
 @Component({ selector, viewBindings }) @View({ template })
 export class Splash implements ISplash {
