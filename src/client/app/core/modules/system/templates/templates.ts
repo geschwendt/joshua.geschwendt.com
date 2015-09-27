@@ -2,7 +2,7 @@
 
 'use strict';
 
-import APPLICATION from 'partials:app/_app.html!text';
+import APPLICATION from 'src/client/app/_app.html!text';
 
 /// main templates
 import JLG_SPLASH from 'src/client/app/main/splash/_splash.html!text'; 
