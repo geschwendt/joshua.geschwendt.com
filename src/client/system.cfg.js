@@ -4,8 +4,7 @@ System.config({
   transpiler: "typescript",
   paths: {
     "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*",
-    "partials:*": "src/client/*"
+    "npm:*": "jspm_packages/npm/*"
   },
   map: {
     "angular": "npm:angular@1.5.0-beta.0",
