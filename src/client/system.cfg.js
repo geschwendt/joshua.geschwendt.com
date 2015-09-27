@@ -4,15 +4,16 @@ System.config({
   transpiler: "typescript",
   paths: {
     "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*"
+    "npm:*": "jspm_packages/npm/*",
+    "partials:*": "src/client/*"
   },
-
   map: {
     "angular": "npm:angular@1.5.0-beta.0",
     "angular-animate": "npm:angular-animate@1.5.0-beta.0",
     "angular-ui-router": "npm:angular-ui-router@0.2.15",
     "text": "github:systemjs/plugin-text@0.0.2",
     "typescript": "npm:typescript@1.6.2",
+    "zone.js": "npm:zone.js@0.5.5",
     "github:jspm/nodelibs-buffer@0.1.0": {
       "buffer": "npm:buffer@3.5.0"
     },
@@ -39,6 +40,9 @@ System.config({
       "ieee754": "npm:ieee754@1.1.6",
       "is-array": "npm:is-array@1.0.1"
     },
+    "npm:es6-promise@3.0.2": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
+    },
     "npm:os-browserify@0.1.2": {
       "os": "github:jspm/nodelibs-os@0.1.0"
     },
@@ -53,6 +57,10 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1",
       "readline": "github:jspm/nodelibs-readline@0.1.0"
+    },
+    "npm:zone.js@0.5.5": {
+      "es6-promise": "npm:es6-promise@3.0.2",
+      "process": "github:jspm/nodelibs-process@0.1.1"
     }
   }
 });

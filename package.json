@@ -59,12 +59,13 @@
     "typescript": "^1.6.2"
   },
   "jspm": {
-    "configFile": "src/client/config.js",
+    "configFile": "src/client/system.cfg.js",
     "dependencies": {
       "angular": "npm:angular@^1.5.0-beta.0",
       "angular-animate": "npm:angular-animate@^1.5.0-beta.0",
       "angular-ui-router": "npm:angular-ui-router@^0.2.15",
-      "text": "github:systemjs/plugin-text@^0.0.2"
+      "text": "github:systemjs/plugin-text@^0.0.2",
+      "zone.js": "npm:zone.js@^0.5.5"
     },
     "devDependencies": {
       "typescript": "npm:typescript@^1.6.2"

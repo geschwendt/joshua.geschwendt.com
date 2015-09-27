@@ -246,7 +246,7 @@ function bundle_js(done) {
     config: {}
   }
      
-  builder.loadConfig('src/client/config.js').then(() => {
+  builder.loadConfig('src/client/system.cfg.js').then(() => {
     builder.buildStatic(
       system.import, 
       system.export, 

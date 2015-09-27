@@ -1,42 +1,42 @@
 // ----------------------
 // template module system
 
-declare module 'src/client/app/_app.html!text' {
+declare module 'partials:app/_app.html!text' {
   const html : string;
   export default html;
 }
 
-declare module 'src/client/app/main/header/_header.html!text' {
+declare module 'partials:app/main/header/_header.html!text' {
   const html : string;
   export default html;  
 }
 
-declare module 'src/client/app/main/banner/_banner.html!text' {
+declare module 'partials:app/main/banner/_banner.html!text' {
   const html : string;
   export default html;  
 }
 
-declare module 'src/client/app/main/splash/_splash.html!text' {
+declare module 'partials:app/main/splash/_splash.html!text' {
   const html : string;
   export default html;  
 }
 
-declare module 'src/client/app/main/window/_window.html!text' {
+declare module 'partials:app/main/window/_window.html!text' {
   const html : string;
   export default html;  
 }
 
-declare module 'src/client/app/main/footer/_footer.html!text' {
+declare module 'partials:app/main/footer/_footer.html!text' {
   const html : string;
   export default html;  
 }
 
-declare module 'src/client/app/main/window/projects/_projects.html!text' {
+declare module 'partials:app/main/window/projects/_projects.html!text' {
   const html : string;
   export default html;    
 }
 
-declare module 'src/client/app/main/window/projects/project/_project.html!text' {
+declare module 'partials:app/main/window/projects/project/_project.html!text' {
   const html : string;
   export default html;    
 }
