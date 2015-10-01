@@ -15,8 +15,8 @@
 
 <p align="center">
   <a href="https://buildtimetrend.herokuapp.com/dashboard/geschwendt/joshua.geschwendt.com/"><img alt="Buildtime trend" src="https://buildtimetrend.herokuapp.com/badge/geschwendt/joshua.geschwendt.com/latest"/></a>
-  <a href="http://issuestats.com/github/geschwendt/joshua.geschwendt.com"><img src="http://issuestats.com/github/geschwendt/joshua.geschwendt.com/badge/pr"/></a>
-  <a href="http://issuestats.com/github/geschwendt/joshua.geschwendt.com"><img src="http://issuestats.com/github/geschwendt/joshua.geschwendt.com/badge/issue" /></a>
+  <a href="http://issuestats.com/github/geschwendt/joshua.geschwendt.com"><img src="http://issuestats.com/github/geschwendt/joshua.geschwendt.com/badge/pr?style=flat" /></a>
+  <a href="http://issuestats.com/github/geschwendt/joshua.geschwendt.com"><img src="http://issuestats.com/github/geschwendt/joshua.geschwendt.com/badge/issue?style=flat" /></a>
 </p>
 
 <p align="right"><a href="https://gitter.im/geschwendt/joshua.geschwendt.com?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/geschwendt/joshua.geschwendt.com" src="https://badges.gitter.im/Join%20Chat.svg"/></a></p>
