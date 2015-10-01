@@ -9,21 +9,16 @@ import path from 'path';
 import { spawn } from 'child_process';
 
 import del from 'del';
-
-import browserSync from 'browser-sync';
-import modrewrite from 'connect-modrewrite';
-
 import karma from 'karma';
 
 import { clean_dist, clean_docs, clean_reports, clean_tmp } from './tasks/clean';
-
 import { build_js, bundle_js, minify_js } from './tasks/scripts';
-
 import { build_css, minify_css } from './tasks/styles';
+import { serve_dist, serve_tmp } from './tasks/serve';
+import { watch_tmp, watch_dist } from './tasks/watch';
 
 const $$ = load({ lazy: true });
 
-import { watch_tmp, watch_dist } from './tasks/watch';
 
 /// set the gulp enviornment 
 process.env.GULP_ENV = !process.env.TRAVIS 
@@ -124,39 +119,6 @@ function end_karma(done) {
     // ? gulp.src('reports/coverage/**/lcov.info').pipe($$.coveralls())
     // : spawn('open', ['reports/coverage/html/index.html']);
 }
-
-
-// ----------------
-// servers
-
-function serve_tmp() {
-  const bsync = browserSync.create();
-  bsync.init({
-    files: [
-      'tmp/build/**/*.js', 
-      'tmp/serve/**/*.css', 
-      'src/client/**/*.html'
-    ],
-    server: {
-      baseDir: [ 'tmp/build', 'tmp/serve', 'src/client' ],
-      middleware: [ 
-        modrewrite(['!\\.\\w+$ /index.html [L]']) 
-      ]
-    }
-  });    
-}
-
-function serve_dist() {
-  const bsync = browserSync.create();
-  bsync.init({
-    files: ['dist/**'],
-    server: {
-      baseDir:    ['dist'],
-      middleware: [modrewrite(['!\\.\\w+$ /index.html [L]'])]
-    }
-  });    
-}
-
 
 
 // ----------------
