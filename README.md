@@ -8,10 +8,15 @@
 
 <p align="center">
   <a href="https://travis-ci.org/geschwendt/joshua.geschwendt.com"><img alt="Build Status" src="https://img.shields.io/travis/geschwendt/joshua.geschwendt.com/master.svg?style=flat"/></a>
-  <a href="https://buildtimetrend.herokuapp.com/dashboard/geschwendt/joshua.geschwendt.com/"><img alt="Buildtime trend" src="https://buildtimetrend.herokuapp.com/badge/geschwendt/joshua.geschwendt.com/latest"/></a>
   <a href="https://coveralls.io/r/geshwendt/joshua.geschwendt.com?branch=master"><img alt="Coveralls Status" src="http://img.shields.io/coveralls/geschwendt/joshua.geschwendt.com.svg?style=flat"/></a>
   <a href="https://david-dm.org/geschwendt/joshua.geschwendt.com"><img alt="Dependency Status" src="https://david-dm.org/geschwendt/joshua.geschwendt.com.svg?style=flat"/></a>
   <a href="https://david-dm.org/geschwendt/joshua.geschwendt.com#info=devDependencies"><img alt="devDependency Status" src="https://david-dm.org/geschwendt/joshua.geschwendt.com/dev-status.svg?style=flat"/></a>	  
+</p>
+
+<p align="center">
+  <a href="https://buildtimetrend.herokuapp.com/dashboard/geschwendt/joshua.geschwendt.com/"><img alt="Buildtime trend" src="https://buildtimetrend.herokuapp.com/badge/geschwendt/joshua.geschwendt.com/latest"/></a>
+  <a href="http://issuestats.com/github/geschwendt/joshua.geschwendt.com"><img src="http://issuestats.com/github/geschwendt/joshua.geschwendt.com/badge/pr"/></a>
+  <a href="http://issuestats.com/github/geschwendt/joshua.geschwendt.com"><img src="http://issuestats.com/github/geschwendt/joshua.geschwendt.com/badge/issue" /></a>
 </p>
 
 <p align="right"><a href="https://gitter.im/geschwendt/joshua.geschwendt.com?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/geschwendt/joshua.geschwendt.com" src="https://badges.gitter.im/Join%20Chat.svg"/></a></p>
@@ -57,6 +62,49 @@ $(npm/bin) run gulp serve
 ```
 $(npm/bin) run gulp test
 ```
+
+## Naming Conventions
+
+Files:
+  - Syntax: `Pascal_Snake_Case`
+  - Example: 
+    - `_Product_List.html`
+    - `_Product_List.scss`
+    - `Product_List.ts`, 
+    - `Product_List_Spec.ts`
+
+Scripts: 
+  - Interfaces/Classes:
+    - Syntax: `PascalCase`
+    - Example: `IProductList/ProductList`
+    
+  - Functions/Methods
+    - Syntax: `camelCase`
+    - Example: `getProductList()`
+
+  - Constants
+    - Syntax: `CAPITAL_SNAKE_CASE`
+    - Example: `PRODUCT_LIST_REGEX`
+    
+Styles: 
+  - Classes:
+    - Syntax: `spinal-case`
+    - Example: `.product-list`
+  
+  - Ids: Do Not Use.
+
+  - Function: 
+    - Syntax: `spinal-case`
+    - Example: `@function calculate-percent()`  
+  
+  - Mixins: 
+    - Syntax: `spinal-case`
+    - Example: `@mixin list-grid()`  
+  
+  - Variables: 
+    - Syntax: `spinal-case`
+    - Example: `$product-list-title-color`
+
 
 ## Help Wanted!
 

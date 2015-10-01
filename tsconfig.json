@@ -1,18 +1,14 @@
 {
   "compilerOptions": {
-	"declaration": false,
     "emitDecoratorMetadata": true,
-	"experimentalDecorators": true,
-	"module": "commonjs",
-	"noImplicitAny": false,
-	"noLib": false,
-	"removeComments": true,
-	"target": "es5"
+	  "experimentalDecorators": true,
+	  "module": "commonjs",
+	  "target": "es5"
   },
   "fileGlobs": [
     "./src/**/*.ts",
-	"./tools/**/*.ts",
-	"!./jspm_packages",
-	"!./node_modules"
+	  "./tools/**/*.ts",
+	  "!./jspm_packages",
+	  "!./node_modules"
   ]
 }
