@@ -2,18 +2,20 @@
 
 import del from 'del';
 
-export function clean_dist(done) {
-  del(['dist']).then(() => done());  
-}
+import { MANIFEST } from '../manifest';
 
 export function clean_docs(done) {
-  del(['docs']).then(() => done());  
+  del([ MANIFEST.DOCS ]).then(() => done());  
 }
 
 export function clean_reports(done) {
-  del(['reports']).then(() => done());    
+  del([ MANIFEST.REPORTS ]).then(() => done());    
 }
 
-export function clean_tmp(done) {
-  del(['tmp']).then(() => done());
+export function clean_stage(done) {
+  del([ MANIFEST.DEST.STAGE ]).then(() => done());
+}
+
+export function clean_build(done) {
+  del([ MANIFEST.DEST.BUILD ]).then(() => done());  
 }

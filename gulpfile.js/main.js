@@ -11,7 +11,13 @@ import { spawn } from 'child_process';
 import del from 'del';
 import karma from 'karma';
 
-import { clean_dist, clean_docs, clean_reports, clean_tmp } from './tasks/clean';
+import { 
+  clean_stage,
+  clean_build, 
+  clean_docs, 
+  clean_reports 
+} from './tasks/clean';
+
 import { build_js, bundle_js, minify_js } from './tasks/scripts';
 import { build_css, minify_css } from './tasks/styles';
 import { serve_dist, serve_tmp } from './tasks/serve';
@@ -28,20 +34,27 @@ process.env.GULP_ENV = !process.env.TRAVIS
 // ----------------
 // default
 
-gulp.task('default', () => {
-  console.log(gulp.tree());
-});
+gulp.task('default', () => { console.log(gulp.tree()); });
 
 
 // ----------------
 // clean
 
-gulp.task('clean.all', gulp.parallel(clean_dist, clean_docs, clean_reports, clean_tmp));
+gulp.task('clean.all', 
+  gulp.parallel(
+    clean_docs, 
+    clean_reports, 
+    clean_stage,
+    clean_build
+  )
+);
 
-gulp.task('clean.dist',    clean_dist);
+
 gulp.task('clean.docs',    clean_docs);
 gulp.task('clean.reports', clean_reports);
-gulp.task('clean.tmp',     clean_tmp);
+
+gulp.task('clean.stage', clean_stage);
+gulp.task('clean.build', clean_build);
 
 
 // ----------------
@@ -49,7 +62,7 @@ gulp.task('clean.tmp',     clean_tmp);
 
 gulp.task('serve', // broken
   gulp.series(
-    clean_tmp,  
+    clean_stage,  
     gulp.parallel(
       build_css,
       gulp.series(build_js, bundle_js)
@@ -63,7 +76,7 @@ gulp.task('serve', // broken
 
 gulp.task('serve:dist', 
   gulp.series(
-    gulp.series(clean_tmp, clean_dist),  
+    gulp.series(clean_stage, clean_build),  
     gulp.parallel(
       gulp.series(build_css, minify_css),
       gulp.series(build_js, bundle_js, minify_js),
@@ -78,7 +91,7 @@ gulp.task('serve:dist',
 
 gulp.task('build', 
   gulp.series(
-    gulp.series(clean_tmp, clean_dist),  
+    gulp.series(clean_stage, clean_build),  
     gulp.parallel(
       gulp.series(build_css, minify_css),
       gulp.series(build_js, bundle_js, minify_js),
@@ -92,7 +105,7 @@ gulp.task('build',
 
 gulp.task('test', 
   gulp.series(  
-    gulp.series(clean_tmp, clean_reports),
+    gulp.series(clean_stage, clean_reports),
     gulp.series(build_js), 
     run_karma, 
     end_karma
@@ -101,7 +114,7 @@ gulp.task('test',
 
 gulp.task('test:dist', 
   gulp.series(  
-    gulp.series(clean_tmp, clean_reports),
+    gulp.series(clean_stage, clean_reports),
     gulp.series(build_js), 
     run_karma, 
     end_karma
