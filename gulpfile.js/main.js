@@ -15,13 +15,15 @@ import modrewrite from 'connect-modrewrite';
 
 import karma from 'karma';
 
-import { watch_tmp, watch_dist } from './tasks/watch';
+import { clean_dist, clean_docs, clean_reports, clean_tmp } from './tasks/clean';
 
 import { build_js, bundle_js, minify_js } from './tasks/scripts';
 
 import { build_css, minify_css } from './tasks/styles';
 
 const $$ = load({ lazy: true });
+
+import { watch_tmp, watch_dist } from './tasks/watch';
 
 /// set the gulp enviornment 
 process.env.GULP_ENV = !process.env.TRAVIS 
@@ -45,22 +47,6 @@ gulp.task('clean.dist',    clean_dist);
 gulp.task('clean.docs',    clean_docs);
 gulp.task('clean.reports', clean_reports);
 gulp.task('clean.tmp',     clean_tmp);
-
-function clean_dist(done) {
-  del(['dist']).then(() => done());  
-}
-
-function clean_docs(done) {
-  del(['docs']).then(() => done());  
-}
-
-function clean_reports(done) {
-  del(['reports']).then(() => done());    
-}
-
-function clean_tmp(done) {
-  del(['tmp']).then(() => done());
-}
 
 
 // ----------------
