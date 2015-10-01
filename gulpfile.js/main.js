@@ -9,12 +9,17 @@ import path from 'path';
 import { spawn } from 'child_process';
 
 import del from 'del';
-import merge from 'merge2';
 
 import browserSync from 'browser-sync';
 import modrewrite from 'connect-modrewrite';
 
 import karma from 'karma';
+
+import { watch_tmp, watch_dist } from './tasks/watch';
+
+import { build_js, bundle_js, minify_js } from './tasks/scripts';
+
+import { build_css, minify_css } from './tasks/styles';
 
 const $$ = load({ lazy: true });
 
@@ -34,7 +39,7 @@ gulp.task('default', () => {
 // ----------------
 // clean
 
-gulp.task('clean.all', gulp.series(clean_dist, clean_docs, clean_reports, clean_tmp));
+gulp.task('clean.all', gulp.parallel(clean_dist, clean_docs, clean_reports, clean_tmp));
 
 gulp.task('clean.dist',    clean_dist);
 gulp.task('clean.docs',    clean_docs);
@@ -136,20 +141,6 @@ function end_karma(done) {
 
 
 // ----------------
-// watch
-
-function watch_tmp() {
-  gulp.watch(['src/client/**/*.ts'], gulp.series(build_js, bundle_js)); 
-  gulp.watch(['src/client/**/*.scss'], build_css);  
-}
-
-function watch_dist() {
-  gulp.watch(['src/client/**/*.ts'], gulp.series(build_js, bundle_js, minify_js)); 
-  gulp.watch(['src/client/**/*.scss'], gulp.series(build_css, minify_css));  
-}
-
-
-// ----------------
 // servers
 
 function serve_tmp() {
@@ -181,25 +172,6 @@ function serve_dist() {
 }
 
 
-// ----------------
-// css
-
-function build_css() {
-  return gulp
-    .src('src/client/**/*.scss')
-    .pipe($$.sourcemaps.init())
-    .pipe($$.sass().on('error', $$.sass.logError))
-    .pipe($$.sourcemaps.write('.'))
-    .pipe(gulp.dest('tmp/serve'))
-}
-
-function minify_css() {
-  return gulp
-    .src('tmp/serve/**/*.css')
-    .pipe($$.csso())
-    .pipe(gulp.dest('dist'));
-}
-
 
 // ----------------
 // html
@@ -207,58 +179,6 @@ function minify_css() {
 function copy_html() {
   return gulp
     .src('src/client/index.html')
-    .pipe(gulp.dest('dist'));
-}
-
-// ----------------
-// js
-
-const TSCONFIG = require('../src/client/tsconfig.json').compilerOptions;
-const TSOPTIONS = { 
-    typescript: require('typescript') 
-}; 
-
-const tsProject = $$.typescript.createProject(TSCONFIG, TSOPTIONS);  
-
-function build_js() {
-  const tsResult = gulp
-    .src(path.join('src/client', '**/*.ts'))
-    .pipe($$.sourcemaps.init())
-    .pipe($$.typescript(tsProject))
- 
-  return merge([
-    tsResult.dts
-      .pipe($$.sourcemaps.write('.'))
-      .pipe(gulp.dest('tmp/serve/dts')),
-    tsResult.js
-      .pipe($$.sourcemaps.write('.'))
-      .pipe(gulp.dest('tmp/serve'))
-  ]);   
-}
-
-function bundle_js(done) {
-   
-  const Builder = require('systemjs-builder');
-  const builder = new Builder();
-  const system = {
-    import: './tmp/serve/app/index.js',
-    export: './tmp/build/app/index.js',
-    config: {}
-  }
-     
-  builder.loadConfig('src/client/system.cfg.js').then(() => {
-    builder.buildStatic(
-      system.import, 
-      system.export, 
-      system.config
-    ).then(() => done());
-  });
-}
-
-function minify_js() {
-  return gulp
-    .src('tmp/build/**/*.js')
-    .pipe($$.uglify())
     .pipe(gulp.dest('dist'));
 }
 
