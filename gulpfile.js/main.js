@@ -271,3 +271,13 @@ function deploy() {
       .pipe($$.ghPages());
   }
 }
+
+
+// register cleanup listener for ctrl+c/kill used to quit any persistent tasks (autotest or serve tasks)
+process.on('SIGINT', function() { 
+  console.log('\n\nstarting cleanup...');
+  del(['dist', 'docs', 'reports','tmp']).then(() => {
+    console.log('\nfinished cleanup')  
+    process.exit();
+  });
+});
